@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
 enum Msg {
-    Begin,  AddOne, SubOne
+    Begin,  AddOne, SubOne, Dance
 }
 
 struct Model {
@@ -9,6 +9,7 @@ struct Model {
     val2: String,
     image1: String,
     has_hp: bool,
+    is_dancing: String,
     
 }
 
@@ -22,6 +23,7 @@ impl Component for Model {
             val2: "Sweet Tardi-sons".to_owned(),
             image1: "images/tardigradebase.png".to_owned(),
             has_hp: false,
+            is_dancing: "not-dancing".to_owned(),
         }
     }
 
@@ -65,6 +67,19 @@ impl Component for Model {
                 true
             }
 
+            Msg::Dance=> {
+                let tard_dance = String::from("tard-dance");
+                if self.is_dancing.eq(&tard_dance){
+                    self.is_dancing = String::from("not-dancing");
+                }
+                else{
+                    self.is_dancing = tard_dance;
+                }
+                
+                true
+            }
+
+           
         }
     }
 
@@ -77,9 +92,10 @@ impl Component for Model {
                 <button onclick={link.callback(|_| Msg::AddOne)}>{ "Headphones" }</button>
                 //<button onclick={link.batch_callback(|_| vec![Msg::AddOne, Msg::AddOne, Msg::AddOne])}>{ "Begin" }</button>
                 <button onclick={link.callback(|_| Msg::SubOne)}>{ "Pillow" }</button>
+                <button onclick={link.callback(|_| Msg::Dance)}>{ "Dance" }</button>
                 <p>{ self.value }</p>
                 <p>{ self.val2.to_owned() }</p> //display self.val2
-                <img style="width: 500px; height: 600px; margin: auto;" src={ self.image1.to_owned() }/> //display sweet walnut with the mash potatos or stacked tards
+                <img style="width: 500px; height: 600px; margin: auto;" class={self.is_dancing.to_owned()} src={ self.image1.to_owned() }/> //display sweet walnut with the mash potatos or stacked tards
             </div>
         }
     }
